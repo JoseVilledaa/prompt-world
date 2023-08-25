@@ -1,9 +1,69 @@
-import React from 'react'
+import Link from "next/link";
+import React from "react";
 
-const Form = () => {
+const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
   return (
-    <div>Form</div>
-  )
-}
+    <>
+      <section className="w-full max-w-full flex-start flex-col">
+        <h1 className="head_text text-left">
+          <span className="blue_gradient">{type} Post</span>
+        </h1>
+        <p className="desc text-left max-w-md">
+          {type} y comparte tu prompt con el mundo.
+        </p>
 
-export default Form
+        <form
+          onSubmit={handleSubmit}
+          className="mt-10 w-full max-w-2xl flex
+          flex-col gap-7 glassmorphism"
+          >
+          <label>
+            <span className="font-satoshi font-semibold text-base text-gray-700">
+              {" "}
+              Tu prompt de IA
+            </span>
+
+          {/* TextArea del Prompt */}
+            <textarea
+              value={post.prompt}
+              onChange={(e) => setPost({ ...post, prompt: e.target.value })}
+              placeholder="Escribe tu prompt de IA"
+              className="form_textarea"
+            />
+          </label>
+
+          <label>
+            <span className="font-satoshi font-semibold text-base text-gray-700">
+              {" "}
+              Tag
+            </span>
+            {/* TextArea del Tag */}
+            <input
+              value={post.tag}
+              onChange={(e) => setPost({ ...post, tag: e.target.value })}
+              placeholder="# Tag"
+              className="form_input"
+            />
+          </label>
+
+          <div className="flex-end mx-3 mb-5 gap-4">
+            <Link href='/' className="px-5 py-1.5 text-sm text-gray-500">
+              Cancelar
+            </Link>
+
+            <button
+              type="submit"
+              disabled={submitting}
+              className="px-5 py-1.5 text-sm bg-primary-orange rounded-full text-white"
+              >
+                {submitting ? "Publicando..." : "Publicar"}
+              </button>
+
+          </div>
+        </form>
+      </section>
+    </>
+  );
+};
+
+export default Form;
